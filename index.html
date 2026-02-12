@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Kiss Day Surprise 💋</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, sans-serif;
+text-align:center;
+background:linear-gradient(135deg,#ffdde1,#ee9ca7);
+color:white;
+overflow:hidden;
+}
+
+.page{
+display:none;
+margin-top:100px;
+}
+
+.active{
+display:block;
+}
+
+input, textarea{
+padding:10px;
+border-radius:20px;
+border:none;
+text-align:center;
+width:250px;
+}
+
+textarea{
+height:80px;
+resize:none;
+}
+
+button{
+padding:12px 25px;
+margin:10px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+background:white;
+color:#ff4d88;
+font-weight:bold;
+cursor:pointer;
+}
+
+#noBtn{
+position:absolute;
+}
+
+.heart{
+position:absolute;
+font-size:20px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10vh);opacity:1;}
+100%{transform:translateY(110vh);opacity:0;}
+}
+
+.photo{
+width:180px;
+border-radius:20px;
+margin:10px;
+box-shadow:0 0 20px rgba(255,255,255,0.8);
+animation:fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:scale(0.8);}
+to{opacity:1;transform:scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+<h2>Enter Your Sweet Name 💕</h2>
+<input type="text" id="name">
+<br>
+<button id="next1">Next 💋</button>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+<h2>Who are you mine? 😌💖</h2>
+<button class="identity">Piggy 🐷💗</button>
+<button class="identity">Love of My Life 💍❤️</button>
+<button class="identity">Mr Lokare 😎🔥</button>
+<button class="identity">Darling 🥰💞</button>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+<h2>Are you missing my kisses? 💋</h2>
+<button id="yesBtn">YES 🤍🩷</button>
+<button id="noBtn">NO 🙈</button>
+<p>For fun please choose option NO 😜</p>
+</div>
+
+<!-- PAGE 4 -->
+<div id="page4" class="page">
+<h1>Happy Kiss Day <span id="showName"></span> 💋</h1>
+<h2>Loveeeee Youuuuu Moreeeee 🤍🩷</h2>
+
+<p>Give reply on it 💌</p>
+<textarea id="replyText" placeholder="Type your reply here..."></textarea>
+<br>
+<button id="submitReply">Submit Reply 💕</button>
+
+<div id="afterReply" style="display:none;margin-top:20px;">
+<h3>Reply received 😘💞</h3>
+
+<img src="photo1.jpg" class="photo">
+<img src="photo2.jpg" class="photo">
+
+</div>
+</div>
+
+<script>
+
+/* PAGE NAVIGATION */
+document.getElementById("next1").onclick=function(){
+page1.classList.remove("active");
+page2.classList.add("active");
+};
+
+document.querySelectorAll(".identity").forEach(btn=>{
+btn.onclick=function(){
+page2.classList.remove("active");
+page3.classList.add("active");
+};
+});
+
+yesBtn.onclick=function(){
+var n=name.value;
+if(n==="") n="Piggy";
+showName.innerText=n;
+
+page3.classList.remove("active");
+page4.classList.add("active");
+};
+
+noBtn.onmouseover=function(){
+this.style.top=Math.random()*window.innerHeight+"px";
+this.style.left=Math.random()*window.innerWidth+"px";
+};
+
+/* SLOW EMOJI BURST */
+function createKissBurst(){
+const emojis=["💋","😘","😚","😗","🩷","🤍","💖"];
+
+let i=0;
+
+let interval=setInterval(function(){
+
+if(i>40){
+clearInterval(interval);
+return;
+}
+
+let kiss=document.createElement("div");
+kiss.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+kiss.style.position="fixed";
+kiss.style.left=window.innerWidth/2+"px";
+kiss.style.top=window.innerHeight/2+"px";
+kiss.style.fontSize=(Math.random()*30+25)+"px";
+kiss.style.pointerEvents="none";
+kiss.style.transition="all 2s ease-out";
+
+document.body.appendChild(kiss);
+
+setTimeout(()=>{
+kiss.style.left=Math.random()*window.innerWidth+"px";
+kiss.style.top=Math.random()*window.innerHeight+"px";
+kiss.style.opacity="0";
+},50);
+
+setTimeout(()=>{
+kiss.remove();
+},2000);
+
+i++;
+
+},120);   // slower speed
+}
+
+/* REPLY BUTTON */
+submitReply.onclick=function(){
+var reply=replyText.value;
+if(reply.trim()!==""){
+afterReply.style.display="block";
+createKissBurst();
+}
+};
+
+/* FALLING HEARTS */
+setInterval(function(){
+let heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="🤍🩷";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(Math.random()*4+3)+"s";
+document.body.appendChild(heart);
+
+setTimeout(()=>{heart.remove();},7000);
+
+},400);
+
+</script>
+
+</body>
+</html>
